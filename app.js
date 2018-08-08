@@ -87,7 +87,7 @@ observadordeestado();
 //en el observador de estado
 function aparece(email) {
     var contenido = document.getElementById('contenido');
-    contenido.innerHTML = '<h1>Bienvenido (a):' + email + '</h1><br>  <button type="button" class="btn btn-primary" onclick="cerrarSesion()">Cerrar Sesión</button> <button type="button" class="btn btn-danger" onclick="borrarUsuario()">Eliminar este usuario</button>';
+    contenido.innerHTML = '<h1>Bienvenido (a):' + email + '</h1><br>  <button type="button" class="btn btn-primary" onclick="cerrarSesion()">Cerrar Sesión</button>';
     contenido.style.display = "block";
 
 }
@@ -129,13 +129,13 @@ function verificarCorreo() {
 // función que sirve para borrar un usuario
 // function borrarUsuario() {
 //     var correoeliminar = document.getElementById('email3').value;
-    
+
 
 //     var user = correoeliminar;
 //     console.log(user);
 //     alert('usuario---- ' + user.email);
 //     user.delete().then(function () {
-    
+
 //         alert('usuario eliminado')
 //     }).catch(function (error) {
 //         alert('Error de codigo:\n ' + errorCode + ' Mensaje de Error:\n ' + errorMessage);
@@ -162,23 +162,23 @@ function recuperarContrasena() {
 
 // //////////////////// FIRESTORE /////////////////////////
 
-Function agregarEstudiante()
+function agregarEstudiante()
 {
     var nombre = document.getElementById('nombre').value;
     var apellido = document.getElementById('apellido').value;
     var edad = document.getElementById('edad').value;
+
+    // Add a first document with a generated ID.
+    db.collection("users").add({
+        first: nombre,        
+        last: apellido,
+        born: edad
+    })
+        .then(function (docRef) {
+            console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function (error) {
+            console.error("Error adding document: ", error);
+        });
 }
 
-// Add a second document with a generated ID.
-db.collection("users").add({
-    first: "Alan",
-    middle: "Mathison",
-    last: "Turing",
-    born: 1912
-})
-.then(function(docRef) {
-    console.log("Document written with ID: ", docRef.id);
-})
-.catch(function(error) {
-    console.error("Error adding document: ", error);
-});
