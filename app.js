@@ -41,9 +41,11 @@ function observadordeestado() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             console.log('Existe usuario activo');
+            aparece();
             // User is signed in.
             var displayName = user.displayName;
             var email = user.email;
+            console.log(user);
             var emailVerified = user.emailVerified;
             var photoURL = user.photoURL;
             var isAnonymous = user.isAnonymous;
@@ -60,3 +62,13 @@ function observadordeestado() {
 
 // inicio el observadordeestado() 
 observadordeestado() ;
+
+//función que sirve para mostrar un mensaje solo cuando el usuario este activo, es llamada 
+//en el observador de estado
+function aparece()
+{
+    var contenido= document.getElementById('contenido');
+    contenido.innerHTML=" solo lo ve usuario activo";
+    contenido.style.display="block";
+    
+}
