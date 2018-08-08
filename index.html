@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <!-- framework para maquetación  -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDnBBZbLIj-jfxbsVwgfYgj6A7m-aK7WzU",
+            authDomain: "usuarios-c5672.firebaseapp.com",
+            databaseURL: "https://usuarios-c5672.firebaseio.com",
+            projectId: "usuarios-c5672",
+            storageBucket: "usuarios-c5672.appspot.com",
+            messagingSenderId: "203478034038"
+        };
+        firebase.initializeApp(config);
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row p-3">
+            <label for="Msg">Registro de usuarios</label><br>
+            <form>
+                <div class="form-group">
+                    <label for="email">Dirección de correo</label>
+                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Ingrese email" value="julianrodri11@gmail.com">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+                <div class="form-group">
+                    <label for="contrasena">Contraseña</label>
+                    <input type="password" class="form-control" id="contrasena" placeholder="Ingrese su contraseña" value="123123">
+                </div>               
+                <button type="button" class="btn btn-primary" onclick="registrar()">Submit</button>
+            </form>
+
+
+        </div>
+        <div class="row p-3">
+            <label for="Msg">Ingreso de usuarios</label><br>
+            <form>
+                <div class="form-group">
+                    <label for="email2">Dirección de correo</label>
+                    <input type="email" class="form-control" id="email2" aria-describedby="emailHelp" placeholder="Ingrese email" value="julianrodri11@gmail.com">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+                <div class="form-group">
+                    <label for="contrasena2">Contraseña</label>
+                    <input type="password" class="form-control" id="contrasena2" placeholder="Ingrese su contraseña" value="123123">
+                </div>               
+                <button type="button" class="btn btn-primary" onclick="registrar()">Submit</button>
+            </form>
+
+
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+
+
+</body>
+
+</html>
