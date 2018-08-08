@@ -19,7 +19,7 @@ function registrar() {
             var errorMessage = error.message;
             if (errorCode == 'auth/email-already-in-use') {
                 alert('El usuario ya existe, por favor inicia sesión \nSi olvidaste tu cotraseña puedes recuperarla');
-            } else {                
+            } else {
                 alert('Mensaje de Error: ' + errorMessage);
             }
 
@@ -35,14 +35,14 @@ function ingresar() { //se reciben las variables de las cajas de texto
     firebase.auth().signInWithEmailAndPassword(email2, contrasena2)
         .then(function () { // si el usuario y contraseña estan correctos, entonces
 
-           
+
         })
         .catch(function (error) {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
-            alert('Error de codigo:\n '+errorCode+' Mensaje de Error:\n ' + errorMessage);
-            
+            alert('Error de codigo:\n ' + errorCode + ' Mensaje de Error:\n ' + errorMessage);
+
         });
 }
 
@@ -80,14 +80,14 @@ function observadordeestado() {
     });
 }
 
- // inicio el observadordeestado() 
- observadordeestado();
+// inicio el observadordeestado() 
+observadordeestado();
 
 //función que sirve para mostrar un mensaje solo cuando el usuario este activo, es llamada 
 //en el observador de estado
 function aparece(email) {
     var contenido = document.getElementById('contenido');
-    contenido.innerHTML = '<h1>Bienvenido (a):' + email + '</h1><br>  <button type="button" class="btn btn-primary" onclick="cerrarSesion()">Cerrar Sesión</button>';
+    contenido.innerHTML = '<h1>Bienvenido (a):' + email + '</h1><br>  <button type="button" class="btn btn-primary" onclick="cerrarSesion()">Cerrar Sesión</button> <button type="button" class="btn btn-danger" onclick="borrarUsuario()">Eliminar este usuario</button>';
     contenido.style.display = "block";
 
 }
@@ -122,5 +122,36 @@ function verificarCorreo() {
     }).catch(function (error) {
         // An error happened.
         console.log('Error, no se ha podido enviar un correo de notificación');
+    });
+}
+
+
+// función que sirve para borrar un usuario
+// function borrarUsuario() {
+//     var correoeliminar = document.getElementById('email3').value;
+    
+
+//     var user = correoeliminar;
+//     console.log(user);
+//     alert('usuario---- ' + user.email);
+//     user.delete().then(function () {
+    
+//         alert('usuario eliminado')
+//     }).catch(function (error) {
+//         alert('Error de codigo:\n ' + errorCode + ' Mensaje de Error:\n ' + errorMessage);
+//     });
+// }
+
+function recuperarContrasena() {
+
+    var auth = firebase.auth();
+    var emailAddress = document.getElementById('email3').value;
+
+    auth.sendPasswordResetEmail(emailAddress).then(function () {
+        // Email sent.
+        alert('hemos enviado una link para restablecer tu contraseña')
+    }).catch(function (error) {
+        // An error happened.
+        alert('Error de codigo:\n ' + errorCode + ' Mensaje de Error:\n ' + errorMessage);
     });
 }
