@@ -68,7 +68,30 @@ observadordeestado() ;
 function aparece()
 {
     var contenido= document.getElementById('contenido');
-    contenido.innerHTML=" solo lo ve usuario activo";
+    contenido.innerHTML='<h1>Bienvenido</h1><br>  <button type="button" class="btn btn-primary" onclick="cerrarSesion()">Cerrar Sesión</button>';
     contenido.style.display="block";
     
+}
+// función que sirve para quitar el contenido del div de mensajes y ocultarlo
+function desaparece()
+{
+    var contenido= document.getElementById('contenido');
+    contenido.innerHTML='';
+    contenido.style.display="none";
+}
+
+// función que sirve para cerrar la sesión de un usuario activo
+function cerrarSesion()
+{
+    firebase.auth().signOut()
+    .then(
+        function(){
+            console.log('Saliendo...');
+            alert('Sesión Cerrada');
+            desaparece();
+        })
+    .catch(function(error)
+    {
+        console.log(error);
+    })
 }
