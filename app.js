@@ -155,3 +155,30 @@ function recuperarContrasena() {
         alert('Error de codigo:\n ' + errorCode + ' Mensaje de Error:\n ' + errorMessage);
     });
 }
+
+
+// CRUD //
+
+
+// //////////////////// FIRESTORE /////////////////////////
+
+Function agregarEstudiante()
+{
+    var nombre = document.getElementById('nombre').value;
+    var apellido = document.getElementById('apellido').value;
+    var edad = document.getElementById('edad').value;
+}
+
+// Add a second document with a generated ID.
+db.collection("users").add({
+    first: "Alan",
+    middle: "Mathison",
+    last: "Turing",
+    born: 1912
+})
+.then(function(docRef) {
+    console.log("Document written with ID: ", docRef.id);
+})
+.catch(function(error) {
+    console.error("Error adding document: ", error);
+});

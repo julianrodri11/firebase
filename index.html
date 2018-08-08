@@ -16,6 +16,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
     <script>
         // Initialize Firebase
         var config = {
@@ -26,13 +27,20 @@
             storageBucket: "usuarios-c5672.appspot.com",
             messagingSenderId: "203478034038"
         };
-        firebase.initializeApp(config);
-    </script>
+
+
+        firebase.initializeApp(config);        
+        var db = firebase.firestore();
+        
+        
+    </script>    
 </head>
 
 <body>
     <div class="container">
-        <label for="Msg"> <strong>      Registro de usuarios</strong></label>
+        <label for="Msg">
+            <strong> Registro de usuarios</strong>
+        </label>
         <div class="row p-3">
             <form>
                 <div class="form-group">
@@ -43,13 +51,15 @@
                 <div class="form-group">
                     <label for="contrasena">Contraseña</label>
                     <input type="password" class="form-control" id="contrasena" placeholder="Ingrese su contraseña" value="123123">
-                </div>               
+                </div>
                 <button type="button" class="btn btn-primary" onclick="registrar()">Registrarme</button>
             </form>
 
 
         </div>
-        <label for="Msg"> <strong>      Ingreso de usuarios</strong></label>
+        <label for="Msg">
+            <strong> Ingreso de usuarios</strong>
+        </label>
         <div class="row p-3">
             <form>
                 <div class="form-group">
@@ -60,27 +70,29 @@
                 <div class="form-group">
                     <label for="contrasena2">Contraseña</label>
                     <input type="password" class="form-control" id="contrasena2" placeholder="Ingrese su contraseña" value="123123">
-                </div>               
+                </div>
                 <button type="button" class="btn btn-primary" onclick="ingresar()">Ingresar</button>
             </form>
 
 
         </div>
-        <label for="Msg"> <strong>Olvidó su contraseña</strong></label>
+        <label for="Msg">
+            <strong>Olvidó su contraseña</strong>
+        </label>
         <div class="row p-3">
             <form>
                 <div class="form-group">
                     <label for="email3">Dirección de correo</label>
                     <input type="email" class="form-control" id="email3" aria-describedby="emailHelp" placeholder="Ingrese email" value="jerodriv9@hotmail.com">
                     <small id="emailHelp" class="form-text text-muted">Ingrese el correo de la cuenta Para recuperar su contraseña.</small>
-                </div>                
+                </div>
                 <button type="button" class="btn btn-primary" onclick="recuperarContrasena()">recuperar Contraseña </button>
             </form>
 
 
         </div>
         <div class="row p-3 bg-success" id="contenido" style="display: none;">
-                
+
         </div>
     </div>
 
