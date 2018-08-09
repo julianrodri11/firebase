@@ -208,7 +208,7 @@ function leerDatos() {
                 <td>${doc.data().first}</td>
                 <td>${doc.data().last}</td>
                 <td>${doc.data().born}</td>
-                <td><button class="btn btn-success" onclick="editar('${doc.id}')">Editar</button></td>
+                <td><button class="btn btn-success" onclick="editar('${doc.id}','${doc.data().first}','${doc.data().last}','${doc.data().born}')">Editar</button></td>
                 <td><button class="btn btn-danger" onclick="eliminar('${doc.id}')">Eliminar</button></td>
             </tr>`;
 
@@ -222,8 +222,37 @@ function leerDatos() {
 leerDatos();
 
 
-function editar(id) {
-    alert('dato: ' + id);
+function editar(id, nombre, apellido, fecha) {
+
+    //alert('dato: ' + id+nombre+apellido,fecha);
+    document.getElementById('nombre').value = nombre
+    document.getElementById('apellido').value = apellido
+    document.getElementById('edad').value = edad
+    var boton = document.getElementById('boton');
+    boton.innerHTML = 'Actualizar registro';
+    // si se hace click en el nuevo boton con el nombre actualizar
+    boton.onclick = function () {
+        var operacion = db.collection('users').doc(id);
+        var newNombre = document.getElementById('nombre').value;
+        var newApellido = document.getElementById('apellido').value;
+        var newFecha = document.getElementById('edad').value;
+        return operacion.update({
+            first: newNombre,
+            last: newApellido,
+            born: newFecha
+        }).then(function () {
+            console.log('Registro actualizado correctamente');
+            boton.innerHTML = 'Guardar';
+            document.getElementById('nombre').value = '',
+            document.getElementById('apellido').value = '',
+            document.getElementById('edad').value = '',
+            alert('Registro actualizado correctamente');
+        }).catch(function(error){
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            alert('Error de codigo:\n ' + errorCode + ' Mensaje de Error:\n ' + errorMessage);
+        })
+    }
 }
 
 // funcion que sirve para eliminar un registro de la coleccion
