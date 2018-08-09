@@ -35,7 +35,6 @@ function ingresar() { //se reciben las variables de las cajas de texto
     firebase.auth().signInWithEmailAndPassword(email2, contrasena2)
         .then(function () { // si el usuario y contraseña estan correctos, entonces
 
-
         })
         .catch(function (error) {
             // Handle Errors here.
@@ -87,7 +86,9 @@ observadordeestado();
 //en el observador de estado
 function aparece(email) {
     var contenido = document.getElementById('contenido');
-    contenido.innerHTML = '<h1>Bienvenido (a):' + email + '</h1><br>  <button type="button" class="btn btn-primary" onclick="cerrarSesion()">Cerrar Sesión</button>';
+    contenido.innerHTML =
+        `<h1>Bienvenido (a):` + email +
+        `</h1><br>  <button type="button" class="btn btn-primary" onclick="cerrarSesion()">Cerrar Sesión</button>`;
     contenido.style.display = "block";
 
 }
@@ -122,6 +123,9 @@ function verificarCorreo() {
     }).catch(function (error) {
         // An error happened.
         console.log('Error, no se ha podido enviar un correo de notificación');
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert('Error de codigo:\n ' + errorCode + ' Mensaje de Error:\n ' + errorMessage);
     });
 }
 
@@ -151,7 +155,9 @@ function recuperarContrasena() {
         // Email sent.
         alert('hemos enviado una link para restablecer tu contraseña')
     }).catch(function (error) {
-        // An error happened.
+        // An error happened. 
+        var errorCode = error.code;
+        var errorMessage = error.message;
         alert('Error de codigo:\n ' + errorCode + ' Mensaje de Error:\n ' + errorMessage);
     });
 }
@@ -162,23 +168,74 @@ function recuperarContrasena() {
 
 // //////////////////// FIRESTORE /////////////////////////
 
-function agregarEstudiante()
-{
+function agregarEstudiante() {
     var nombre = document.getElementById('nombre').value;
     var apellido = document.getElementById('apellido').value;
     var edad = document.getElementById('edad').value;
 
     // Add a first document with a generated ID.
     db.collection("users").add({
-        first: nombre,        
-        last: apellido,
-        born: edad
-    })
+            first: nombre,
+            last: apellido,
+            born: edad
+        })
         .then(function (docRef) {
+            alert('Usuario registrado con éxito');
             console.log("Document written with ID: ", docRef.id);
+            //limpio cajas de texto
+            document.getElementById('nombre').value = "";
+            document.getElementById('apellido').value = "";
+            document.getElementById('edad').value = "";
         })
         .catch(function (error) {
             console.error("Error adding document: ", error);
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            alert('Error de codigo:\n ' + errorCode + ' Mensaje de Error:\n ' + errorMessage);
         });
 }
 
+// funcion que sirve para mostrar los datos de una colección
+function leerDatos() {
+    var tabla = document.getElementById('tabla');
+    db.collection("users").onSnapshot((querySnapshot) => {
+        tabla.innerHTML = '';
+        querySnapshot.forEach((doc) => {
+            console.log(`${doc.id} => ${doc.data().first}`);
+            tabla.innerHTML += `
+            <tr>
+                <th scope="row">${doc.id}</th>
+                <td>${doc.data().first}</td>
+                <td>${doc.data().last}</td>
+                <td>${doc.data().born}</td>
+                <td><button class="btn btn-success" onclick="editar('${doc.id}')">Editar</button></td>
+                <td><button class="btn btn-danger" onclick="eliminar('${doc.id}')">Eliminar</button></td>
+            </tr>`;
+
+            // console.log(`${doc.id} => `);
+            // console.log(`${doc.id} => `);
+            // console.log(`${doc.id} => `);
+        });
+    });
+}
+//
+leerDatos();
+
+
+function editar(id) {
+    alert('dato: ' + id);
+}
+
+// funcion que sirve para eliminar un registro de la coleccion
+function eliminar(id) {
+    var respuesta = confirm('Esta segguro que desea eliminar el registro' + id);
+    if (respuesta) {
+
+        db.collection("users").doc(id).delete().then(function () {
+            console.log("Document successfully deleted!");
+            alert('Registro eliminado correctamente');
+        }).catch(function (error) {
+            console.error("Error removing document: ", error);
+        });
+    }
+}
