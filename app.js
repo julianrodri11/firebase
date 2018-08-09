@@ -34,7 +34,7 @@ function ingresar() { //se reciben las variables de las cajas de texto
     var contrasena2 = document.getElementById('contrasena2').value;
     firebase.auth().signInWithEmailAndPassword(email2, contrasena2)
         .then(function () { // si el usuario y contraseña estan correctos, entonces
-
+           
         })
         .catch(function (error) {
             // Handle Errors here.
@@ -62,6 +62,8 @@ function observadordeestado() {
             // si el correo de usuario esta verificado 
             if (emailVerified) {
                 aparece(email);
+                leerDatos();
+                
             } else {
                 alert('Por favor verifica tu correo electrónico\nTe hemos enviado un enlace de activación')
             }
@@ -86,17 +88,22 @@ observadordeestado();
 //en el observador de estado
 function aparece(email) {
     var contenido = document.getElementById('contenido');
+    var tablaListar = document.getElementById('tablaListar');
     contenido.innerHTML =
-        `<h1>Bienvenido (a):` + email +
-        `</h1><br>  <button type="button" class="btn btn-primary" onclick="cerrarSesion()">Cerrar Sesión</button>`;
+        `<h3>Bienvenido (a): ` + email +
+        `</h3><br>  <button type="button" class="btn btn-primary" onclick="cerrarSesion()">Cerrar Sesión</button>`;
     contenido.style.display = "block";
+    tablaListar.style.display="block";
 
 }
 // función que sirve para quitar el contenido del div de mensajes y ocultarlo
 function desaparece() {
     var contenido = document.getElementById('contenido');
+    var tablaListar = document.getElementById('tablaListar');
     contenido.innerHTML = '';
     contenido.style.display = "none";
+    //tablaListar.innerHTML = '';
+    tablaListar.style.display = "none";
 }
 
 // función que sirve para cerrar la sesión de un usuario activo
@@ -202,9 +209,10 @@ function leerDatos() {
         tabla.innerHTML = '';
         querySnapshot.forEach((doc) => {
             console.log(`${doc.id} => ${doc.data().first}`);
+            //<th scope="row">${doc.id}</th>
             tabla.innerHTML += `
             <tr>
-                <th scope="row">${doc.id}</th>
+                
                 <td>${doc.data().first}</td>
                 <td>${doc.data().last}</td>
                 <td>${doc.data().born}</td>
@@ -219,7 +227,7 @@ function leerDatos() {
     });
 }
 //
-leerDatos();
+//leerDatos();
 
 
 function editar(id, nombre, apellido, fecha) {
