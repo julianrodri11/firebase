@@ -20,12 +20,15 @@ function registrar() {
             if (errorCode == 'auth/email-already-in-use') {
                 alert('El usuario ya existe, por favor inicia sesión \nSi olvidaste tu cotraseña puedes recuperarla');
             } else {
-                alert('Mensaje de Error: ' + errorMessage);
+                alert('Error de codigo:\n ' + errorCode + ' Mensaje de Error:\n ' + errorMessage);
             }
 
         });
 
 }
+
+
+
 
 
 // función que sirve para ingresar al sistema 
@@ -34,16 +37,25 @@ function ingresar() { //se reciben las variables de las cajas de texto
     var contrasena2 = document.getElementById('contrasena2').value;
     firebase.auth().signInWithEmailAndPassword(email2, contrasena2)
         .then(function () { // si el usuario y contraseña estan correctos, entonces
-           
+
         })
         .catch(function (error) {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
-            alert('Error de codigo:\n ' + errorCode + ' Mensaje de Error:\n ' + errorMessage);
+            if (errorCode == 'auth/user-not-found') {
+                alert('El usuario no se encuentra registrado en el sistema');
+            }
+            else {
+                alert('Error de codigo:\n ' + errorCode + ' Mensaje de Error:\n ' + errorMessage);
+            }
 
         });
 }
+
+
+
+
 
 // función que valida si un usuario esta en el sistema
 function observadordeestado() {
@@ -63,7 +75,7 @@ function observadordeestado() {
             if (emailVerified) {
                 aparece(email);
                 leerDatos();
-                
+
             } else {
                 alert('Por favor verifica tu correo electrónico\nTe hemos enviado un enlace de activación')
             }
@@ -81,8 +93,16 @@ function observadordeestado() {
     });
 }
 
+
+
+
+
 // inicio el observadordeestado() 
 observadordeestado();
+
+
+
+
 
 //función que sirve para mostrar un mensaje solo cuando el usuario este activo, es llamada 
 //en el observador de estado
@@ -93,9 +113,14 @@ function aparece(email) {
         `<h3>Bienvenido (a): ` + email +
         `</h3><br>  <button type="button" class="btn btn-primary" onclick="cerrarSesion()">Cerrar Sesión</button>`;
     contenido.style.display = "block";
-    tablaListar.style.display="block";
+    tablaListar.style.display = "block";
 
 }
+
+
+
+
+
 // función que sirve para quitar el contenido del div de mensajes y ocultarlo
 function desaparece() {
     var contenido = document.getElementById('contenido');
@@ -105,6 +130,10 @@ function desaparece() {
     //tablaListar.innerHTML = '';
     tablaListar.style.display = "none";
 }
+
+
+
+
 
 // función que sirve para cerrar la sesión de un usuario activo
 function cerrarSesion() {
@@ -119,6 +148,10 @@ function cerrarSesion() {
             console.log(error);
         })
 }
+
+
+
+
 
 // función que sirve enviar un correo a un usuario que se registre por primera vez
 function verificarCorreo() {
@@ -170,6 +203,10 @@ function recuperarContrasena() {
 }
 
 
+
+
+
+
 // CRUD //
 
 
@@ -182,10 +219,10 @@ function agregarEstudiante() {
 
     // Add a first document with a generated ID.
     db.collection("users").add({
-            first: nombre,
-            last: apellido,
-            born: edad
-        })
+        first: nombre,
+        last: apellido,
+        born: edad
+    })
         .then(function (docRef) {
             alert('Usuario registrado con éxito');
             console.log("Document written with ID: ", docRef.id);
@@ -201,6 +238,10 @@ function agregarEstudiante() {
             alert('Error de codigo:\n ' + errorCode + ' Mensaje de Error:\n ' + errorMessage);
         });
 }
+
+
+
+
 
 // funcion que sirve para mostrar los datos de una colección
 function leerDatos() {
@@ -230,6 +271,9 @@ function leerDatos() {
 //leerDatos();
 
 
+
+
+
 function editar(id, nombre, apellido, fecha) {
 
     //alert('dato: ' + id+nombre+apellido,fecha);
@@ -252,16 +296,20 @@ function editar(id, nombre, apellido, fecha) {
             console.log('Registro actualizado correctamente');
             boton.innerHTML = 'Guardar';
             document.getElementById('nombre').value = '',
-            document.getElementById('apellido').value = '',
-            document.getElementById('edad').value = '',
-            alert('Registro actualizado correctamente');
-        }).catch(function(error){
+                document.getElementById('apellido').value = '',
+                document.getElementById('edad').value = '',
+                alert('Registro actualizado correctamente');
+        }).catch(function (error) {
             var errorCode = error.code;
             var errorMessage = error.message;
             alert('Error de codigo:\n ' + errorCode + ' Mensaje de Error:\n ' + errorMessage);
         })
     }
 }
+
+
+
+
 
 // funcion que sirve para eliminar un registro de la coleccion
 function eliminar(id) {
