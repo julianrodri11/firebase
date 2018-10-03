@@ -32,129 +32,181 @@
         firebase.initializeApp(config);
         var db = firebase.firestore();
 
+        const messaging = firebase.messaging();
+        messaging.requestPermission()
+            .then(function () {
+                console.log('Notification permission granted.');
+
+                return messaging.getToken();
+                alert('Ahora puede recibir notificaciones');
+                // TODO(developer): Retrieve an Instance ID token for use with FCM.
+                // ...
+            }).then(function (token) {
+                console.log(token);
+            })
+            .catch(function (err) {
+                console.log('Unable to get permission to notify.', err);
+                // alert('No puedes recibir notificaciones debido a: ',err);
+            });
+
 
     </script>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row p-3 bg-warning text-center" id="contenido" style="display: none;">
 
-        </div>
-
-
-        <label for="Msg ">
-            <strong> Login de usuarios</strong>
-        </label>
-        <div class="row p-3 border border-primary rounded">
-            <form>
-                <div class="form-group">
-                    <label for="email2">Dirección de correo</label>
-                    <input type="email" class="form-control" id="email2" aria-describedby="emailHelp" placeholder="Ingrese email" value="correo@gmail.com">
-                    <small id="emailHelp" class="form-text text-muted">Para poder ingresar, debe abrir su correo y hacer click en el enlace de verificación de correo.</small>
-                </div>
-                <div class="form-group">
-                    <label for="contrasena2">Contraseña</label>
-                    <input type="password" class="form-control" id="contrasena2" placeholder="Ingrese su contraseña" value="123123">
-                </div>
-                <button type="button" class="btn btn-primary" onclick="ingresar()">Ingresar</button>
-            </form>
-
-
-        </div>
-
-
-
-        <label for="Msg ">
-            <strong> Registro de usuarios para ingresar al sistema</strong>
-        </label>
-        <div class="row p-3 border border-warning rounded">
-            <form>
-                <div class="form-group">
-                    <label for="email">Dirección de correo</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Ingrese email" value="correo@gmail.com">
-                    <small id="emailHelp" class="form-text text-muted">Ingrese un correo real, debido a que se envia un correo de notificación</small>
-                </div>
-                <div class="form-group">
-                    <label for="contrasena">Contraseña</label>
-                    <input type="password" class="form-control" id="contrasena" placeholder="Ingrese su contraseña" value="123123">
-                </div>
-                <button type="button" class="btn btn-warning" onclick="registrar()">Registrarme</button>
-            </form>
-
-
-        </div>
-
-
-
-        <label for="Msg ">
-            <strong>Olvidó su contraseña</strong>
-        </label>
-        <div class="row p-3 border border-danger rounded">
-            <form>
-                <div class="form-group">
-                    <label for="email3">Dirección de correo</label>
-                    <input type="email" class="form-control" id="email3" aria-describedby="emailHelp" placeholder="Ingrese email" value="correo@hotmail.com">
-                    <small id="emailHelp" class="form-text text-muted">Ingrese el correo de la cuenta para recuperar su contraseña.</small>
-                </div>
-                <button type="button" class="btn btn-danger" onclick="recuperarContrasena()">Recuperar Contraseña </button>
-            </form>
-
-
-        </div>
-
-        <label for="Msg ">
-            <strong> Agregar estudiante a la base de datos</strong>
-        </label>
-        <div class="row p-3 border border-success rounded">
-            <form>
-                <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" aria-describedby="emailHelp" placeholder="Ingrese email" value="Juan David">
-                    <small id="emailHelp" class="form-text text-muted">Debe Iniciar sesión para poder registrar en la colección.</small>
-                </div>
-                <div class="form-group">
-                    <label for="apellido">Apellido</label>
-                    <input type="text" class="form-control" id="apellido" placeholder="Ingrese su contraseña" value="Rodriguez">
-                </div>
-                <div class="form-group">
-                    <label for="edad">Edad</label>
-                    <input type="date" class="form-control" id="edad" placeholder="Ingrese su contraseña">
-                </div>
-                <button type="button" class="btn btn-success" onclick="agregarEstudiante()" id="boton">Agreegar Estudiante</button>
-            </form>
-
-
-        </div>
-
-
-        <label for="Msg ">
-            <strong>Lista de registros en la base de datos con un usuario autenticado</strong>
-        </label>
-        <div class="row p-3 bg-danger">
-            <table class="table table-hover table-dark" style="display: none;" id="tablaListar">
-                <thead>
-                    <tr>
-                        <!-- <th scope="col">ID</th> -->
-                        <th scope="col">NOMBRE</th>
-                        <th scope="col">APELLIDO</th>
-                        <th scope="col">FECHA NACIMIENTO</th>
-                        <th scope="col">ACTUALIZAR</th>
-                        <th scope="col">ELIMINAR</th>
-                    </tr>
-                </thead>
-                <tbody id="tabla">
-
-                </tbody>
-            </table>
-
-        </div>
-
-
-
-
+    <div class="row p-3 bg-warning text-center" id="contenido" style="display: none;">
 
     </div>
+
+    <div class="container p-0">
+        <div class="row p-0">
+            <!-- izquierda -->
+            <div class="col-12 col-lg-5 p-0">
+
+
+
+                <!-- inicio de sesión -->
+                <label for="Msg ">
+                    <h4> <strong> Login de usuarios</strong></h4>
+                </label>
+                <div class="row p-3 border border-primary rounded">
+                    <form>
+                        <div class="form-group">
+                            <label for="email2">Dirección de correo</label>
+                            <input type="email" class="form-control" id="email2" aria-describedby="emailHelp"
+                                 placeholder="correo@mail.com">
+                            <small id="emailHelp" class="form-text text-muted">Para poder ingresar, debe abrir su
+                                correo y hacer click en el enlace de verificación de correo.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="contrasena2">Contraseña</label>
+                            <input type="password" class="form-control" id="contrasena2" placeholder="Ingrese su contraseña"
+                                value="123123">
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="ingresar()">Ingresar</button>
+                    </form>
+                </div>
+                <!-- fin de inicio de sesión -->
+
+
+                <!-- registro de usuarios -->
+
+                <label for="Msg ">
+                    <h4> <strong> Registro de usuarios para ingresar al sistema</strong></h4>
+                </label>
+                <div class="row p-3 border border-warning rounded">
+                    <form>
+                        <div class="form-group">
+                            <label for="email">Dirección de correo</label>
+                            <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                                 placeholder="correo@mail.com">
+                            <small id="emailHelp" class="form-text text-muted">Ingrese un correo real, debido a que
+                                se envia un correo de notificación</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="contrasena">Contraseña</label>
+                            <input type="password" class="form-control" id="contrasena" placeholder="Ingrese su contraseña"
+                                value="123123">
+                        </div>
+                        <button type="button" class="btn btn-warning" onclick="registrar()">Registrarme</button>
+                    </form>
+                </div>
+                <!-- fin de registro de usuarios -->
+
+
+                <label for="Msg ">
+                    <h4> <strong>Olvidó su contraseña</strong></h4>
+                </label>
+                <div class="row p-3 border border-danger rounded">
+                    <form>
+                        <div class="form-group">
+                            <label for="email3">Dirección de correo</label>
+                            <input type="email" class="form-control" id="email3" aria-describedby="emailHelp"
+                                 placeholder="correo@email.com">
+                            <small id="emailHelp" class="form-text text-muted">Ingrese el correo de la cuenta para
+                                recuperar su
+                                contraseña.</small>
+                        </div>
+                        <button type="button" class="btn btn-danger" onclick="recuperarContrasena()">Recuperar
+                            Contraseña
+                        </button>
+                    </form>
+
+
+                </div>
+
+                <label for="Msg ">
+                    <h4> <strong> Agregar estudiante a la base de datos</strong></h4>
+                </label>
+                <div class="row p-3 border border-success rounded">
+                    <form>
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" aria-describedby="emailHelp"
+                                 value="Juan David">
+                            <small id="emailHelp" class="form-text text-muted">Debe Iniciar sesión para poder
+                                registrar en la
+                                colección.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido">Apellido</label>
+                            <input type="text" class="form-control" id="apellido" placeholder="Ingrese su contraseña"
+                                value="Rodriguez">
+                        </div>
+                        <div class="form-group">
+                            <label for="edad">Edad</label>
+                            <input type="date" class="form-control" id="edad" placeholder="Ingrese su contraseña">
+                        </div>
+                        <button type="button" class="btn btn-success" onclick="agregarEstudiante()" id="boton">Agreegar
+                            Estudiante</button>
+                    </form>
+
+
+                </div>
+
+
+            </div>
+
+
+            <div class="col-12 col-lg-7 p-5">
+                <!-- derecha -->
+                <label for="Msg ">
+                    <strong>Lista de registros en la base de datos con un usuario autenticado</strong>
+                </label>
+                
+                
+                <div class="row p-3 bg-danger">
+                    <div class="col-12">
+                        <table class="table-responsive table-hover table-dark" style="display: none;" id="tablaListar">
+                            <thead>
+                                <tr>
+                                    <!-- <th scope="col">ID</th> -->
+                                    <th scope="col">NOMBRE</th>
+                                    <th scope="col">APELLIDO</th>
+                                    <th scope="col">FECHA NAC</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 text-white">
+                        <strong>Nota</strong>Cuando se hace click en actulizar los datos se cargan en el formulario de <strong>Agregar estudiante a la base de datos</strong>
+                        <br>Solo se podra editar cuando se inicie sesión con el usuario creado y correo verificado
+                    </div>
+                </div>
+                
+
+
+            </div>
+        </div>
+    </div>
+
+
 
     <script src="app.js"></script>
 

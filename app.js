@@ -313,7 +313,7 @@ function editar(id, nombre, apellido, fecha) {
 
 // funcion que sirve para eliminar un registro de la coleccion
 function eliminar(id) {
-    var respuesta = confirm('Esta segguro que desea eliminar el registro' + id);
+    var respuesta = confirm('Esta seguro que desea eliminar el registro: ' + id);
     if (respuesta) {
 
         db.collection("users").doc(id).delete().then(function () {
